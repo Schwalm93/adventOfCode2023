@@ -11,7 +11,7 @@ import utils.Executable;
 
 public class Trebuchet implements Executable {
 
-    private static final String PATH = "src/day1/data/data2.csv";
+    private static final String PATH = "adventOfCode2023\\src\\day1\\data\\data2.csv";
     private static HashMap<String, String> wordToNumber = new HashMap<>();
     private static List<String> pattern = Arrays.asList("one", "two", "three", "four", "five",
             "six", "seven", "eight", "nine");
