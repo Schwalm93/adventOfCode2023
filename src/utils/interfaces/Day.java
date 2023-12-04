@@ -1,8 +1,8 @@
-package utils;
+package utils.interfaces;
 
 import day1.Trebuchet;
 
-public interface Executable {
+public interface Day {
 
     public void init();
     public void execute();

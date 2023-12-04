@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import utils.Executable;
+import utils.interfaces.Day;
 
-public class Trebuchet implements Executable {
+public class Trebuchet implements Day {
 
     private static final String PATH = "adventOfCode2023\\src\\day1\\data\\data2.csv";
     private static HashMap<String, String> wordToNumber = new HashMap<>();

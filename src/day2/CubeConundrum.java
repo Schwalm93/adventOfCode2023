@@ -6,9 +6,9 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.Executable;
+import utils.interfaces.Day;
 
-public class CubeConundrum implements Executable {
+public class CubeConundrum implements Day {
     private static final String PATH_ONE = "src/day2/data/data.csv";
     private static final String PATH_TWO = "src/day2/data/data2.csv";
     private static final GameRequirement GAME_REQ = new GameRequirement(12, 14, 13);
