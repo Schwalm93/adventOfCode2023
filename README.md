@@ -1,18 +1,5 @@
-## Getting Started
-
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+|  #Nr. | Project Name | Description | 
+| :---: | ------------ | ----------- |
+| -[1]- | [Day01](src/day1) | Sum the calibration values from each line of an elf-altered document by combining its first and last digits. |
+| -[2]- | [Day02](src/day2) | Determine which games are possible with only 12 red, 13 green, and 14 blue cubes by checking if any round exceeds these limits, and sum their IDs to get the result. |
+| -[3]- | [Day03](src/day3) | Sum all numbers in the engine schematic that are adjacent to symbols (excluding periods) to find the missing part number. |
