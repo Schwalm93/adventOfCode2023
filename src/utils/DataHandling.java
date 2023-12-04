@@ -19,7 +19,6 @@ public class DataHandling {
         while (matcher.find()) {
             integerList.add(matcher.group());
         }
-
         return integerList;
     }
 
