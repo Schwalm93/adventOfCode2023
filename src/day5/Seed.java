@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Seed {
     private long seed;
+    private long seedinstances;
     private long soil;
     private long fertilizer;
     private long water;
@@ -77,9 +78,21 @@ public class Seed {
         this.location = location;
     }
 
+    public void setSeed(long seed) {
+        this.seed = seed;
+    }
+
+    public long getSeedinstances() {
+        return seedinstances;
+    }
+
+    public void setSeedinstances(long seedinstances) {
+        this.seedinstances = seedinstances;
+    }
+
     @Override
     public String toString() {
-        return "Seed [seed=" + seed + ", soil=" + soil + ", fertilizer=" + fertilizer + ", water=" + water + ", light="
+        return "Seed [seed=" + seed + ", instances=" + seedinstances + ", soil=" + soil + ", fertilizer=" + fertilizer + ", water=" + water + ", light="
                 + light + ", temp=" + temp + ", humidity=" + humidity + ", location=" + location + "]";
     }
 
@@ -88,11 +101,10 @@ public class Seed {
         String[] splitted = data.replace("seeds:", "").split(" ");
         for (int i = 0; i < splitted.length; i++) {
             if (!splitted[i].isEmpty() && (i % 2 == 1)){
-                
-                for (int j = 0; j < Long.parseLong(splitted[i + 1]); j++) {
-                    Seed seed = new Seed(Long.parseLong(splitted[i]) + j);
-                    seeds.add(seed);
-                }
+
+                Seed seed = new Seed(Long.parseLong(splitted[i]));
+                seed.seedinstances = Long.parseLong(splitted[i + 1]);
+                seeds.add(seed);
             }
         }
         return seeds;

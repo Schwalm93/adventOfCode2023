@@ -32,16 +32,27 @@ public class Converter {
     }
 
     public static void seedToSoil() {
-        for (Seed seed : seeds) {
-            seed.setSoil(convert(seed.getSeed(), soilMap));
-            seed.setFertilizer(convert(seed.getSoil(), fertiMap));
-            seed.setWater(convert(seed.getFertilizer(), waterMap));
-            seed.setLight(convert(seed.getWater(), lightMap));
-            seed.setTemp(convert(seed.getLight(), tempMap));
-            seed.setHumidity(convert(seed.getTemp(), humidMap));
-            seed.setLocation(convert(seed.getHumidity(), locationMap));
+        long loweslocation = Long.MAX_VALUE;
+
+        for (int i = 0; i < seeds.size(); i++) {
+            Seed seed = seeds.get(i);
+            
+            for (int j = 0; j < seed.getSeedinstances() - 1; j++) {
+                seed.setSoil(convert(seed.getSeed(), soilMap));
+                seed.setFertilizer(convert(seed.getSoil(), fertiMap));
+                seed.setWater(convert(seed.getFertilizer(), waterMap));
+                seed.setLight(convert(seed.getWater(), lightMap));
+                seed.setTemp(convert(seed.getLight(), tempMap));
+                seed.setHumidity(convert(seed.getTemp(), humidMap));
+                seed.setLocation(convert(seed.getHumidity(), locationMap));
+                seed.setSeed(seed.getSeed() + 1);
+                if (loweslocation > seed.getLocation()) {
+                    loweslocation = seed.getLocation();
+                }
+            }
+            seeds.remove(i);
         }
-        System.out.println("Solution: " + seeds.stream().mapToLong(Seed::getLocation).min().getAsLong());
+        System.out.println(loweslocation);
     }
 
     private static long convert(long valueToConvert, Maps map) {
