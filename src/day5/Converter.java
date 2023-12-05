@@ -41,19 +41,20 @@ public class Converter {
             seed.setHumidity(convert(seed.getTemp(), humidMap));
             seed.setLocation(convert(seed.getHumidity(), locationMap));
         }
+        System.out.println("Solution: " + seeds.stream().mapToLong(Seed::getLocation).min().getAsLong());
     }
 
     private static long convert(long valueToConvert, Maps map) {
 
-        for (MapEntry location : map.mapEntries) {
+            for (MapEntry location : map.mapEntries) {
 
-            if (valueToConvert >= location.getSourceRange()
-                    && valueToConvert <= (location.getSourceRange() + location.getOffset() - 1)) {
-                long diff = valueToConvert - location.getSourceRange();
-                return location.getDestRange() + diff;
+                if (valueToConvert>= location.getSourceRange()
+                        && valueToConvert <= (location.getSourceRange() + location.getOffset() - 1)) {
+                    long diff = valueToConvert - location.getSourceRange();
+                    return location.getDestRange() + diff;
+                }
             }
-        }
-        return valueToConvert;
+            return valueToConvert;
     }
 
 }

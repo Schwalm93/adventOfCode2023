@@ -87,9 +87,12 @@ public class Seed {
         List<Seed> seeds = new ArrayList<>();
         String[] splitted = data.replace("seeds:", "").split(" ");
         for (int i = 0; i < splitted.length; i++) {
-            if (!splitted[i].isEmpty()) {
-                Seed seed = new Seed(Long.parseLong(splitted[i]));
-                seeds.add(seed);
+            if (!splitted[i].isEmpty() && (i % 2 == 1)){
+                
+                for (int j = 0; j < Long.parseLong(splitted[i + 1]); j++) {
+                    Seed seed = new Seed(Long.parseLong(splitted[i]) + j);
+                    seeds.add(seed);
+                }
             }
         }
         return seeds;
