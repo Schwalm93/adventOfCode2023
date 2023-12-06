@@ -7,7 +7,7 @@ import utils.interfaces.Day;
 
 public class WaitForIt implements Day {
 
-    private static final String PATH_ONE = "adventOfCode2023\\src\\day6\\data\\data.csv";
+    private static final String PATH_ONE = "adventOfCode2023\\src\\day6\\data\\data2.csv";
     List<String> fileOne;
 
     public WaitForIt() {
@@ -24,12 +24,12 @@ public class WaitForIt implements Day {
         List<Lap> laps = Lap.setLaps(fileOne);
 
         for (Lap lap : laps) {
-            int lapTime = lap.getTime();
-            int recordDistance = lap.getRecordDistance();
+            Long lapTime = lap.getTime();
+            Long recordDistance = lap.getRecordDistance();
 
             for (int i = 0; i < lapTime; i++) {
-                int rest = lapTime - i;
-                int distance = i * rest;
+                Long rest = lapTime - i;
+                Long distance = i * rest;
 
                 if (distance > recordDistance) {
                     lap.setWaysToWin(lap.getWaysToWin() + 1);

@@ -6,11 +6,11 @@ import java.util.List;
 import utils.DataHandling;
 
 public class Lap {
-    private int time;
-    private int recordDistance;
-    private int waysToWin;
+    private long time;
+    private long recordDistance;
+    private long waysToWin;
 
-    public Lap(int time, int distance) {
+    public Lap(Long time, Long distance) {
         this.time = time;
         this.recordDistance = distance;
     }
@@ -22,7 +22,7 @@ public class Lap {
 
         for (int i = 0; i < data.size() - size; i++) {
             try {
-                Lap lap = new Lap(Integer.parseInt(data.get(i)), Integer.parseInt(data.get(i + size)));
+                Lap lap = new Lap(Long.parseLong(data.get(i)), Long.parseLong(data.get(i + size)));
                 laps.add(lap);
             } catch (Exception e) {
                 System.out.println("Error - String couldn't be parsed to int");
@@ -32,27 +32,27 @@ public class Lap {
         return laps;
     }
 
-    public int getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 
-    public int getRecordDistance() {
+    public Long getRecordDistance() {
         return recordDistance;
     }
 
-    public void setRecordDistance(int distance) {
+    public void setRecordDistance(Long distance) {
         this.recordDistance = distance;
     }
 
-    public int getWaysToWin() {
+    public Long getWaysToWin() {
         return waysToWin;
     }
 
-    public void setWaysToWin(int waysToWin) {
+    public void setWaysToWin(Long waysToWin) {
         this.waysToWin = waysToWin;
     }
 
