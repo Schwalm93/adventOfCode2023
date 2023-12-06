@@ -7,8 +7,10 @@ import utils.interfaces.Day;
 
 public class WaitForIt implements Day {
 
-    private static final String PATH_ONE = "adventOfCode2023\\src\\day6\\data\\data2.csv";
+    private static final String PATH_ONE = "adventOfCode2023\\src\\day6\\data\\data.csv";
+    private static final String PATH_TWO = "adventOfCode2023\\src\\day6\\data\\data2.csv";
     List<String> fileOne;
+    List<String> fileTwo;
 
     public WaitForIt() {
         init();
@@ -17,6 +19,7 @@ public class WaitForIt implements Day {
     @Override
     public void init() {
         fileOne = ReadData.readFromCsv(PATH_ONE);
+        fileTwo = ReadData.readFromCsv(PATH_TWO);
     }
 
     @Override
@@ -38,7 +41,7 @@ public class WaitForIt implements Day {
         for (Lap lap : laps) {
             waysToWin *= lap.getWaysToWin();
         }
-        System.out.println(waysToWin);
+        System.out.println("ways to win = " + waysToWin);
     }
 
     public static void main(String... args) {
