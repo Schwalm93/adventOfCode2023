@@ -26,11 +26,9 @@ public class WaitForIt implements Day {
         for (Lap lap : laps) {
             Long lapTime = lap.getTime();
             Long recordDistance = lap.getRecordDistance();
-
             for (int i = 0; i < lapTime; i++) {
                 Long rest = lapTime - i;
                 Long distance = i * rest;
-
                 if (distance > recordDistance) {
                     lap.setWaysToWin(lap.getWaysToWin() + 1);
                 }
