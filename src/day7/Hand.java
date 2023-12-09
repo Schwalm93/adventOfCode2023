@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Hand {
-    List<Integer> cards = new ArrayList<>();
-    long bid;
-    long total;
-    int rank;
-    HandType type;
+    private List<Integer> cards = new ArrayList<>();
+    private long bid;
+    private long total;
+    private int rank;
+    private HandType type;
 
     public Hand(List<Integer> cards, long bid) {
         this.cards = cards;
@@ -84,7 +84,7 @@ public class Hand {
             this.type = HandType.TWOPAIR;
         } else if (map.containsValue(4) || map.containsValue(5)) {
             setHandType(map.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue)).get().getValue());
-        } else if (map.containsValue(3) && map.containsValue(2)) {
+        } else if ((map.containsValue(3) && map.containsValue(2)) || map.containsValue(6)) {
             this.type = HandType.FULLHOUSE;
         } else if (map.containsValue(3)) {
             this.type = HandType.THREEOFAKIND;
@@ -106,24 +106,41 @@ public class Hand {
 
     private Map<Integer, Integer> checkForJoker(Map<Integer, Integer> cardMap) {
 
-        int amountJoker = cardMap.get(1);
+        int amountJoker = 0;
+        if (cardMap.get(1) != null) {
+            amountJoker = cardMap.get(1);
+        }
+
         boolean containsTwoPair = checkForTwoPairs(cardMap);
         boolean setPair = true;
 
-        if (amountJoker > 0) {
-            for (Entry entry : cardMap.entrySet()) {
-                if (cardMap.containsValue(4) || entry.getValue().equals(4)) {
-                    entry.setValue(5);
-                } else if (cardMap.containsKey(3) || entry.getValue().equals(3)) {
-                        entry.setValue(4);
-                } else if (containsTwoPair && entry.getValue().equals(2)) {
-                    containsTwoPair = false;
-                    entry.setValue(3);
-                } else if (!cardMap.containsValue(3) && entry.getValue().equals(2)) {
-                    entry.setValue(3);
-                } else if (!cardMap.containsValue(2)) {
-                    entry.setValue(2);
-                } 
+        if (amountJoker > 0 && amountJoker != 5) {
+            if (amountJoker == 4) {
+                cardMap.put(1, 5);
+            } else if (amountJoker == 3 && cardMap.containsValue(2)) {
+                setInMap(cardMap, 2, 5);
+            } else if (amountJoker == 3) {
+                cardMap.put(1, 4);
+            } else if (amountJoker == 2 && cardMap.containsValue(3)) {
+                setInMap(cardMap, 3, 5);
+            } else if (amountJoker == 2) {
+                cardMap.put(1, 1);
+                if (cardMap.containsValue(2)) {
+                    setInMap(cardMap, 2, 4);
+                } else {
+                    setInMap(cardMap, 2, 3);
+                }
+                cardMap.put(1, 3);
+            } else if (amountJoker == 1 && cardMap.containsValue(4)) {
+                cardMap.put(1, 5);
+            } else if (amountJoker == 1 && cardMap.containsValue(3)) {
+                cardMap.put(1, 4);
+            } else if (amountJoker == 1 && containsTwoPair) {
+                setInMap(cardMap, 2, 3);
+            } else if (amountJoker == 1 && cardMap.containsValue(2)) {
+                setInMap(cardMap, 2, 3);
+            } else if (amountJoker == 1) {
+                cardMap.put(1, 2);
             }
         }
         return cardMap;
@@ -157,9 +174,20 @@ public class Hand {
         return r;
     }
 
+    private Map<Integer, Integer> setInMap(Map<Integer, Integer> map, int searchValue, int newValue) {
+        for (Entry entry : map.entrySet()) {
+            if (entry.getValue().equals(searchValue)) {
+                entry.setValue(newValue);
+                break;
+            }
+        }
+        return map;
+    }
+
     @Override
     public String toString() {
-        return "Hand [ cards= " + cards + ", bid= " + bid + ", rank= " + rank + ", type= " + type + "total= " + total
+        return "[ cards= " + cards + ", bid= " + bid + ", rank= " + rank + ", type= " + type + "total= "
+                + total
                 + "]";
     }
 

@@ -10,9 +10,7 @@ import utils.interfaces.Day;
 
 public class CamelCards implements Day {
 
-    private static final String PATH_ONE = "src/day7/data/data.csv";
-    // private static final String PATH_TWO =
-    // "adventOfCode2023\\src\\day6\\data\\data2.csv";
+    private static final String PATH_ONE = "adventOfCode2023\\src\\day7\\data\\data.csv";
     List<String> fileOne;
     List<String> fileTwo;
 
@@ -23,7 +21,6 @@ public class CamelCards implements Day {
     @Override
     public void init() {
         fileOne = ReadData.readFromCsv(PATH_ONE);
-        // fileTwo = ReadData.readFromCsv(PATH_TWO);
     }
 
     @Override
