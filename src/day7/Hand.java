@@ -79,6 +79,7 @@ public class Hand {
                 map.put(integer, 1);
             }
         }
+        map = checkForJoker(map);
         if (checkForTwoPairs(map)) {
             this.type = HandType.TWOPAIR;
         } else if (map.containsValue(4) || map.containsValue(5)) {
@@ -103,12 +104,31 @@ public class Hand {
         }
     }
 
-    
-    // private void setRankByValue() {
-    //     // 8 * 10000 
-    //     // 10 * 1000
-    //     // 
-    // }
+    private Map<Integer, Integer> checkForJoker(Map<Integer, Integer> cardMap) {
+
+        int amountJoker = cardMap.get(1);
+        boolean containsTwoPair = checkForTwoPairs(cardMap);
+        boolean setPair = true;
+
+        if (amountJoker > 0) {
+            for (Entry entry : cardMap.entrySet()) {
+                if (cardMap.containsValue(4) || entry.getValue().equals(4)) {
+                    entry.setValue(5);
+                } else if (cardMap.containsKey(3) || entry.getValue().equals(3)) {
+                        entry.setValue(4);
+                } else if (containsTwoPair && entry.getValue().equals(2)) {
+                    containsTwoPair = false;
+                    entry.setValue(3);
+                } else if (!cardMap.containsValue(3) && entry.getValue().equals(2)) {
+                    entry.setValue(3);
+                } else if (!cardMap.containsValue(2)) {
+                    entry.setValue(2);
+                } 
+            }
+        }
+        return cardMap;
+
+    }
 
     private boolean checkForTwoPairs(Map<Integer, Integer> map) {
         int counter = 0;
@@ -130,17 +150,17 @@ public class Hand {
         } else if (c == 'Q') {
             r = 12;
         } else if (c == 'J') {
-            r = 11;
+            r = 1;
         } else if (c == 'T') {
             r = 10;
         }
         return r;
     }
 
-
     @Override
     public String toString() {
-        return "Hand [ cards= " + cards + ", bid= " + bid + ", rank= " + rank + ", type= " + type + "total= " + total + "]";
+        return "Hand [ cards= " + cards + ", bid= " + bid + ", rank= " + rank + ", type= " + type + "total= " + total
+                + "]";
     }
 
     public void setTotal(long total) {
