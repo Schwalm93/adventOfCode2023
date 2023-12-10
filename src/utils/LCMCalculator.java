@@ -4,7 +4,6 @@ import java.util.List;
 
 public class LCMCalculator {
     
-    // Methode zur Berechnung des LCM
     public static Long findLCM(List<Long> numbers) {
         Long result = numbers.get(0);
 
@@ -19,7 +18,7 @@ public class LCMCalculator {
         return a * (b / gcd(a, b));
     }
 
-    // Methode zur Berechnung des GCD (größten gemeinsamen Teilers)
+    // Berechnung des GCD (größten gemeinsamen Teilers)
     private static Long gcd(Long a, Long b) {
         while (b != 0) {
             Long t = b;

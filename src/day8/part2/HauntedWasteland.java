@@ -29,7 +29,7 @@ public class HauntedWasteland implements Day {
 
     @Override
     public void execute() {
-        String[] direction = fileOne.get(0).split("(?<=\\G.{1})");
+        String[] directions = fileOne.get(0).split("(?<=\\G.{1})");
         Map<String, GraphNode> graphNodes = new HashMap<>();
 
         Pattern pattern = Pattern.compile("^(\\w+)\\s*=\\s*\\((\\w+),\\s*(\\w+)\\)$");
@@ -37,27 +37,27 @@ public class HauntedWasteland implements Day {
         for (String string : fileOne) {
             Matcher matcher = pattern.matcher(string);
             if (matcher.find()) {
-                GraphNode graphNode = new GraphNode(matcher.group(1));
-                graphNodes.put(matcher.group(1), graphNode);
-            }
-        }
-        for (String string : fileOne) {
-            Matcher matcher = pattern.matcher(string);
-            if (matcher.find()) {
+                graphNodes.putIfAbsent(matcher.group(1), new GraphNode(matcher.group(1)));
+                graphNodes.putIfAbsent(matcher.group(2), new GraphNode(matcher.group(2)));
+                graphNodes.putIfAbsent(matcher.group(3), new GraphNode(matcher.group(3)));
                 graphNodes.get(matcher.group(1)).addNeighbor(graphNodes.get(matcher.group(2)), "L");
                 graphNodes.get(matcher.group(1)).addNeighbor(graphNodes.get(matcher.group(3)), "R");
             }
         }
+        System.out.println("LCM = " + calculateSteps(graphNodes, directions));
+
+    }
+
+    private static Long calculateSteps(Map<String, GraphNode> graphNodes, String[] directions) {
 
         List<GraphNode> listOfStartGraphNodes = graphNodes.values().stream().filter(e -> e.isStartWith())
                 .collect(Collectors.toList());
-
         long steps = 0;
         boolean condition = true;
         List<Long> lcmValues = new ArrayList<>();
 
         while (condition) {
-            for (String string : direction) {
+            for (String string : directions) {
 
                 steps++;
                 for (int j = 0; j < listOfStartGraphNodes.size(); j++) {
@@ -68,13 +68,12 @@ public class HauntedWasteland implements Day {
                         j--;
                     }
                 }
-                if (listOfStartGraphNodes.size() == 0) {
+                if (listOfStartGraphNodes.isEmpty()) {
                     condition = false;
                 }
-
             }
         }
-        System.out.println("LCM = " + LCMCalculator.findLCM(lcmValues));
+        return LCMCalculator.findLCM(lcmValues);
     }
 
     public static void main(String... args) {

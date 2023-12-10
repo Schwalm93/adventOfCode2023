@@ -1,4 +1,4 @@
-package day8;
+package day8.part1;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import day8.GraphNode;
 import utils.ReadData;
 import utils.interfaces.Day;
 
@@ -27,19 +28,14 @@ public class HauntedWasteland implements Day {
     public void execute() {
         String[] direction = fileOne.get(0).split("(?<=\\G.{1})");
         Map<String, GraphNode> graphNodes = new HashMap<>();
-
         Pattern pattern = Pattern.compile("^(\\w+)\\s*=\\s*\\((\\w+),\\s*(\\w+)\\)$");
 
         for (String string : fileOne) {
             Matcher matcher = pattern.matcher(string);
             if (matcher.find()) {
-                GraphNode graphNode = new GraphNode(matcher.group(1));
-                graphNodes.put(matcher.group(1), graphNode);
-            }
-        }
-        for (String string : fileOne) {
-            Matcher matcher = pattern.matcher(string);
-            if (matcher.find()) {
+                graphNodes.putIfAbsent(matcher.group(1), new GraphNode(matcher.group(1)));
+                graphNodes.putIfAbsent(matcher.group(2), new GraphNode(matcher.group(2)));
+                graphNodes.putIfAbsent(matcher.group(3), new GraphNode(matcher.group(3)));
                 graphNodes.get(matcher.group(1)).addNeighbor(graphNodes.get(matcher.group(2)), "L");
                 graphNodes.get(matcher.group(1)).addNeighbor(graphNodes.get(matcher.group(3)), "R");
             }
@@ -53,15 +49,12 @@ public class HauntedWasteland implements Day {
                 current = current.getNeighbor(string);
                 i++;
                 if (current.getName().equals("ZZZ")) {
-                    System.out.println("END");
                     condition = false;
                     break;
-
                 }
             }
         }
         System.out.println("Steps = " + i);
-
     }
 
     public static void main(String... args) {
