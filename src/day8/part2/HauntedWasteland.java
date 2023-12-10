@@ -1,11 +1,15 @@
-package day8;
+package day8.part2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import day8.GraphNode;
+import utils.LCMCalculator;
 import utils.ReadData;
 import utils.interfaces.Day;
 
@@ -45,23 +49,32 @@ public class HauntedWasteland implements Day {
             }
         }
 
-        GraphNode current = graphNodes.get("AAA");
-        int i = 0;
+        List<GraphNode> listOfStartGraphNodes = graphNodes.values().stream().filter(e -> e.isStartWith())
+                .collect(Collectors.toList());
+
+        long steps = 0;
         boolean condition = true;
+        List<Long> lcmValues = new ArrayList<>();
+
         while (condition) {
             for (String string : direction) {
-                current = current.getNeighbor(string);
-                i++;
-                if (current.getName().equals("ZZZ")) {
-                    System.out.println("END");
-                    condition = false;
-                    break;
 
+                steps++;
+                for (int j = 0; j < listOfStartGraphNodes.size(); j++) {
+                    listOfStartGraphNodes.set(j, listOfStartGraphNodes.get(j).getNeighbor(string));
+                    if (listOfStartGraphNodes.get(j).getName().charAt(2) == 'Z') {
+                        lcmValues.add(steps);
+                        listOfStartGraphNodes.remove(j);
+                        j--;
+                    }
                 }
+                if (listOfStartGraphNodes.size() == 0) {
+                    condition = false;
+                }
+
             }
         }
-        System.out.println("Steps = " + i);
-
+        System.out.println("LCM = " + LCMCalculator.findLCM(lcmValues));
     }
 
     public static void main(String... args) {

@@ -4,12 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GraphNode {
-    String name;
-    Map<String, GraphNode> neighbors;
+    private String name;
+    private Map<String, GraphNode> neighbors;
+    private boolean startWith;
+    private boolean endsWith;
 
     public GraphNode(String name) {
         this.name = name;
         this.neighbors = new HashMap<>();
+        if (name.charAt(2) == 'A') {
+            startWith = true;
+        } else if (name.charAt(2) == 'Z') {
+            endsWith = true;
+        }
     }
 
     public void addNeighbor(GraphNode node, String direction) {
@@ -23,4 +30,13 @@ public class GraphNode {
     public String getName() {
         return name;
     }
+
+    public boolean isStartWith() {
+        return startWith;
+    }
+
+    public boolean isEndsWith() {
+        return endsWith;
+    }
+
 }
